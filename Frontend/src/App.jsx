@@ -1,0 +1,17 @@
+import React from 'react'
+import Header from './componenets/Header';
+import Home from './componenets/Home'
+
+
+function App(){
+
+  return (
+    
+  <div className=" bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
+      <Header />
+      <Home />  
+  </div>
+  )
+}
+
+export default App;
