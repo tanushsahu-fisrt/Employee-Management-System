@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -116,8 +117,21 @@ const Form = () => {
   })
   }
 
+  const location = useLocation();
 
+  const[heading ,setHeading] = useState(false);
+  const[headingUpdate,setHeadingUpdate] = useState(false);
+  const { show , add } = location.state;
 
+  useEffect(() => {
+    if(show== true && add == 'add'){
+      setHeading(true);
+    }
+    else{
+      setHeadingUpdate(true);
+    }
+  },[])
+  
 
 
   return(
@@ -125,6 +139,10 @@ const Form = () => {
         <Header />
 
   <div className="p-10 b-solid-2">
+
+    {heading && <h1 className="text-center p-2 text-xl mt-2 mb-2 font-bold">Insert And Delete Employee</h1>}
+    {headingUpdate && <h1 className="text-center p-2 text-xl mt-2 mb-2 font-bold">Find And Update Employee</h1>}
+
     <div className="bg-yellow-200 border-2  drop-shadow-2xl rounded-lg shadow-2xl p-2 ml-[5%] mr-[5%] ">
     <form>
       <fieldset className="p-3 border border-black">
@@ -351,13 +369,30 @@ const Form = () => {
       </fieldset>
       <br />
 
-    <div className="text-center ">
-        <button type="button" className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700" onClick={handleinsert}>Insert</button>
-        {/* <button type="button" className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700">Find By Employee Id</button> */}
-        <button type="button" className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700" onClick={handleupdate}>Update</button>
-        <button type="button" className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700" onClick={handledelete}>Delete By Employee Id</button>
-    </div>
-
+    
+      {heading &&
+        <div className="text-center">
+        <button 
+        type="button" 
+        className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700" 
+        onClick={handleinsert}>
+          Insert
+        </button>
+        <button 
+        type="button" 
+        className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700" 
+        onClick={handledelete}>
+          Delete By Employee Id
+          </button>
+        </div>
+      }
+      {headingUpdate && 
+        <div className="text-center">
+          <button type="button" className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700">Find By Employee Id</button>
+          <button type="button" className="b-2 w-[20%] bg-blue-500 text-lg m-5 rounded-md text-white hover:bg-blue-700" onClick={handleupdate}>Update</button>
+        </div>
+      }
+    
     </form>
      </div>
 

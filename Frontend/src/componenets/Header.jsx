@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
+
 
 const Header = () => {
+  
   const [login, setLogin] = useState("Login");
   const [showMenu, setShowMenu] = useState(false);
   const token = sessionStorage.getItem("admin");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -16,7 +21,7 @@ const Header = () => {
     if (token) {
       setShowMenu(!showMenu); // Toggle the menu visibility
     } else {
-      window.location.href = "/login"; // Redirect to login page if not logged in
+      navigate("/login"); 
     }
   };
 
@@ -29,7 +34,7 @@ const Header = () => {
   return (
     <>
       <div>
-        <header className="text-white py-4 bg-gradient-to-r from-gray-300 via-gray-500 to-gray-700 p-[2px] ">
+        <header className="text-black py-4 bg-gradient-to-r from-gray-300 via-gray-500 to-gray-700 p-[2px] ">
           <div className="container">
             <nav>
               <ul className="flex space-x-6 my-1 text-xl mx-5">
@@ -37,7 +42,7 @@ const Header = () => {
                   <a
                     href="#"
                     id="homedash"
-                    className="hover:underline border-2 border-white rounded-lg px-1 "
+                    className=" border-2 border-white rounded-lg px-1 "
                   >
                     Home
                   </a>
@@ -45,7 +50,7 @@ const Header = () => {
                 <li>
                   <a
                     href="#"
-                    className="hover:underline border-2 border-white rounded-lg px-1 "
+                    className=" border-2 border-white rounded-lg px-1 "
                   >
                     New Employee
                   </a>
@@ -54,7 +59,7 @@ const Header = () => {
                   <a
                     href="#"
                     id="admindash"
-                    className="hover:underline border-2 border-white rounded-lg px-1"
+                    className=" border-2 border-white rounded-lg px-1"
                   >
                     Admin Dashboard
                   </a>

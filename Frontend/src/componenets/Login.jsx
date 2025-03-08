@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const Login = () => {
@@ -10,6 +13,8 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const token = () => toast.success('Login Sucessfully!')
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -19,7 +24,7 @@ const Login = () => {
       const response = await fetch("http://localhost:3000/checklogin", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -29,10 +34,13 @@ const Login = () => {
       if (msg === "success") {
         sessionStorage.setItem("admin", JSON.stringify(data));
         sessionStorage.setItem("token", jwtoken);
-        sessionStorage.setItem("isfromLogin", "true");
+        sessionStorage.setItem("isfromLogin", true);
 
         if (data.type === "admin") {
-          navigate("/admin");
+          token();
+          setTimeout(() => {
+            navigate("/admin");
+          },1500)
         } else if (data.type === "user") {
           navigate("/user");
         } else {
@@ -127,6 +135,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };
