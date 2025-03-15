@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,12 +8,15 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const token = () => toast.success('Login Sucessfully!')
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,23 +29,27 @@ const Login = () => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password , role }),
       });
 
       const { msg, jwtoken, data } = await response.json();
 
       if (msg === "success") {
-        sessionStorage.setItem("admin", JSON.stringify(data));
         sessionStorage.setItem("token", jwtoken);
         sessionStorage.setItem("isfromLogin", true);
-
+        
         if (data.type === "admin") {
+          sessionStorage.setItem("admin", JSON.stringify(data));
           token();
           setTimeout(() => {
             navigate("/admin");
-          },1500)
-        } else if (data.type === "user") {
-          navigate("/user");
+          },1000)
+        } else if (data.type === "user"){
+          sessionStorage.setItem("user", JSON.stringify(data));
+          token();
+          setTimeout(() => {
+            navigate("/user");
+          },1000)
         } else {
           navigate("/");
         }
@@ -67,10 +74,10 @@ const Login = () => {
             alt="Login illustration"
             className="w-full max-w-md mx-auto rounded-xl shadow-lg"
           />
-          <div className="text-white text-center mt-6 space-y-2">
-            <h1 className="text-4xl font-bold">Employee</h1>
+          <div className="text-white text-center mt-6 space-y-1">
+            <h1 className="text-3xl font-bold">Employee</h1>
             <h2 className="text-3xl font-bold">Management</h2>
-            <p className="text-2xl font-bold">System</p>
+            <p className="text-3xl font-bold">System</p>
           </div>
         </div>
 
@@ -122,12 +129,27 @@ const Login = () => {
                   >
                   </button>
                 </div>
+                <div className="relative flex mt-8 text-center gap-5 ">
+                    <label className="block text-sm font-medium text-gray-700 mb-1 mx-1">
+                      SELECT 
+                     </label>
+                    <select 
+                    name="drop-type"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg "
+                    > 
+                      <option value="select" defaultValue={true} >Select An Role</option>
+                      <option value="admin">Admin</option>
+                      <option value="user">User</option>
+                    </select>
+                </div>
               </div>
 
               <button
                 type="submit"
-                disabled={isLoading}
-                className="w-full py-3 px-6 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg font-medium transition-colors duration-200 disabled:bg-indigo-400"
+                disabled={ !email.trim() || !password.trim() || !role.trim() }
+                className="w-full py-3 px-6 text-white bg-indigo-600 rounded-lg font-medium  disabled:bg-indigo-400"
               >
                 {isLoading ? "Signing in..." : "Sign In"}
               </button>

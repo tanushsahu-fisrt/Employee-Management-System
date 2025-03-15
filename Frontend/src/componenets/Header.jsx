@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import imgLogo from "../assets/logo.png";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css"
 
 const Header = () => {
-  
   const [login, setLogin] = useState("Login");
   const [showMenu, setShowMenu] = useState(false);
   const token = sessionStorage.getItem("admin");
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,89 +15,74 @@ const Header = () => {
       const admin = JSON.parse(token);
       setLogin(admin.email);
     }
-  }, []);
+  }, [token]);
 
   const handleLoginClick = () => {
     if (token) {
-      setShowMenu(!showMenu); // Toggle the menu visibility
+      setShowMenu(!showMenu);
     } else {
-      navigate("/login"); 
+      navigate("/login");
     }
   };
 
   const handleLogout = () => {
     sessionStorage.removeItem("admin");
     sessionStorage.removeItem("token");
-    window.location.href = "/";
+    sessionStorage.removeItem("isfromLogin");
+    toast.success("Logout Successfully")
+    setTimeout(() => navigate("/"),1000)
   };
 
   return (
-    <>
-      <div>
-        <header className="text-black py-4 bg-gradient-to-r from-gray-300 via-gray-500 to-gray-700 p-[2px] ">
-          <div className="container">
-            <nav>
-              <ul className="flex space-x-6 my-1 text-xl mx-5">
-                <li>
-                  <a
-                    href="#"
-                    id="homedash"
-                    className=" border-2 border-white rounded-lg px-1 "
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className=" border-2 border-white rounded-lg px-1 "
-                  >
-                    New Employee
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    id="admindash"
-                    className=" border-2 border-white rounded-lg px-1"
-                  >
-                    Admin Dashboard
-                  </a>
-                </li>
-              </ul>
-              <button
-                onClick={handleLoginClick}
-                className="absolute right-8 top-5 hover:underline text-white border-2 border-white rounded-lg px-1 space-x-10"
-              >
-                {login}
-              </button>
-            </nav>
-          </div>
-        </header>
-      </div>
+    <header className="bg-gradient-to-r from-gray-300 via-gray-500 to-gray-700 p-3">
+      <div className="container mx-auto flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center">
+          <img
+            src={imgLogo}
+            alt="logo"
+            width="50"
+            onClick={() => navigate("/")}
+            className="mx-5 cursor-pointer rounded-md border-2 border-blue-800"
+          />
+          <nav className="ml-6 hidden md:flex space-x-4 text-black text-xl">
+            <a href="/employees" className="border-2 border-white p-1 rounded-md">Employees</a>
+            <a href="/departments" className="border-2 border-white p-1 rounded-md">Departments</a>
+            <a href="/reports" className="border-2 border-white p-1 rounded-md">Reports</a>
+            <a href="/attendance" className="border-2 border-white p-1 rounded-md">Attendance</a>
+            <a href="/payroll" className="border-2 border-white p-1 rounded-md">Payroll</a>
+            
+          </nav>
+        </div>
 
-      {showMenu && (
-        <div className="absolute right-4 top-15 p-2">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg shadow-lg border border-black-200/20">
-            <div className="flex flex-col min-w-[200px]">
+        {/* User Button and Dropdown */}
+        <div className="relative bg-white text-black rounded-md">
+          <button
+            onClick={handleLoginClick}
+            className="border-2 border-white rounded-lg px-3 py-2 hover:bg-white/30 transition-colors duration-200"
+          >
+            {login}
+          </button>
+          {showMenu && (
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg overflow-hidden z-10">
               <a
                 href="/changepw"
-                className="px-4 py-3 text-gray-700 hover:bg-gray-100/50 rounded-t-lg text-lg transition-colors duration-200 flex items-center"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
                 Change Password
               </a>
-              <div className="h-[1px] bg-gray-200/50" />
               <button
                 onClick={handleLogout}
-                className="px-4 py-3 text-gray-700 hover:bg-gray-100/50 rounded-b-lg transition-colors duration-200 text-left text-lg w-full"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
               >
                 Log Out
               </button>
             </div>
-          </div>
+          )}
         </div>
-      )}
-    </>
+      </div>
+      <ToastContainer autoClose={1000} />
+    </header>
   );
 };
 

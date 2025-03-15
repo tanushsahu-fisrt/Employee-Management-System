@@ -1,68 +1,102 @@
 import React, { useEffect, useState } from "react";
+import imgLogo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css"
 
 const Userheader = () => {
+  const navigate = useNavigate();
+  const [login, setLogin] = useState("Login");
+  const [showMenu, setShowMenu] = useState(false);
 
-    const[login,setLogin] = useState('Login');
-    const [showMenu, setShowMenu] = useState(false); 
+  const token = sessionStorage.getItem("user");
 
-    const token = sessionStorage.getItem("admin");
+  useEffect(() => {
+    if (token) {
+      const user = JSON.parse(token);
+      setLogin(user.email);
+    }
+  }, []);
 
-    useEffect(  () => {
-        if(token){
-                const user = JSON.parse(token); 
-                setLogin(user.email);
-            }
-    },[])
+  const handleLoginClick = () => {
+    if (token) {
+      setShowMenu(!showMenu); // Toggle the menu visibility
+    } else {
+      window.location.href = "/login"; // Redirect to login page if not logged in
+    }
+  };
 
-    const handleLoginClick = () => {
-        if (token) {
-            setShowMenu(!showMenu); // Toggle the menu visibility
-        } else {
-            window.location.href = "/login"; // Redirect to login page if not logged in
-        }
-    };
+  const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("empsalary");
+    sessionStorage.removeItem("isfromLogin");
+    sessionStorage.removeItem("token");
+    toast.success("Logout Successfully")
+    setTimeout(() => navigate("/"),1000)
+  };
 
-    const handleLogout = () => {
-        sessionStorage.removeItem("admin");
-        window.location.href = "/";
-    };
+  return (
+    <header className="bg-gradient-to-r from-gray-300 via-gray-500 to-gray-700 p-3">
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="flex items-center">
+          <img
+            src={imgLogo}
+            alt="logo"
+            width="50"
+            onClick={() => navigate("/")}
+            className="mx-5 cursor-pointer rounded-md border-2 border-blue-800"
+          />
+          <nav className="ml-6 hidden md:flex space-x-4 text-black text-xl">
+            <a href="/profile" className="border-2 border-white p-1 rounded-md">
+              profile
+            </a>
+            <a
+              href="/salaryslip"
+              className="border-2 border-white p-1 rounded-md"
+            >
+              salary Slip
+            </a>
+            <a
+              href="/salarystatement"
+              className="border-2 border-white p-1 rounded-md"
+            >
+              Salary Statement
+            </a>
+            <a href="/payroll" className="border-2 border-white p-1 rounded-md">
+              Payroll
+            </a>
+          </nav>
+        </div>
 
-    return(
-    <div>
-       
-        <header className="text-white py-4 bg-gradient-to-r from-gray-300 via-gray-500 to-gray-700 p-[2px] ">
-            <div className="container">
-            <nav>
-                <ul className="flex space-x-6 my-1 text-xl mx-5">
-                    <li><a href="#" id="homedash" className ="hover:underline border-2 border-white rounded-lg px-1 ">Show profile</a></li>
-                    <li><a href="/mycurrentsal"  className ="hover:underline border-2 border-white rounded-lg px-1 ">Current Month salary Slip</a></li>
-                    <li><a href="#" id="admindash" className ="hover:underline border-2 border-white rounded-lg px-1">Show salary Statement </a></li>
-                </ul>               
-                <button onClick={handleLoginClick}
-                className="absolute right-8 top-5 hover:underline text-white border-2 border-white rounded-lg px-1 space-x-10"
-                >{login}
-                </button>
-            </nav>
+        <div className="relative bg-white text-black rounded-md">
+          <button
+            onClick={handleLoginClick}
+            className="border-2 border-white rounded-lg px-3 py-2 hover:bg-white/30 transition-colors duration-200"
+          >
+            {login}
+          </button>
+          {showMenu && (
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg overflow-hidden z-10">
+              <a
+                href="/changepw"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Change Password
+              </a>
+              <button
+                onClick={handleLogout}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+              >
+                Log Out
+              </button>
             </div>
-        </header>
-
-        {showMenu && (
-                <div className="flex flex-col p-2 absolute right-4 top-15 border-2 border-black text-lg bg-white rounded-sm">
-                    <a href="/changepw" className="text-blue-500 hover:underline">
-                        Change Password
-                    </a>
-                    <hr className="shadow-2xl" />
-                    <button onClick={handleLogout} className="text-black rounded">
-                        Log Out
-                    </button>
-                </div>
-        )}
-
-
-
-    </div>
-    
-    )
-}
+          )}
+        </div>
+      </div>
+            <ToastContainer autoClose={1000} />
+      
+    </header>
+  );
+};
 
 export default Userheader;
