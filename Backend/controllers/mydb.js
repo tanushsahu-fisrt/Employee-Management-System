@@ -166,9 +166,9 @@ const deleteemp = async (req,res)=>{
     }
 };
 
-const checklogin = async (email , password) => {
+const checklogin = async (email , password , role) => {
     try{
-        const [result] = await (await Database).execute("SELECT * FROM user WHERE email = ? AND password = ?",[email, password]);
+        const [result] = await (await Database).execute("SELECT * FROM user WHERE email = ? AND password = ? AND type = ?",[email, password , role]);
         return result;    
     }
     catch(err){

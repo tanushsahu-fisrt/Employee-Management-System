@@ -20,7 +20,7 @@ routes.get("/getallcity", db.getallcity);
 
 routes.get("/getallbank", db.getbankcode);
 
-routes.get("/getallemployees", db.getallemployees);
+routes.get("/employees", db.getallemployees);
 
 routes.post("/insertanemp", db.insertemp);
 
@@ -33,9 +33,10 @@ routes.post("/changepw", db.changepw);
 routes.post("/checklogin", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  const role = req.body.role;
 
   try {
-    const result = await db.checklogin(email, password);
+    const result = await db.checklogin(email, password,role);
 
     if(result.length === 0) {
       return res.status(401).json({ msg: "Invalid credentials" });
