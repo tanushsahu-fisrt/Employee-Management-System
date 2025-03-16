@@ -293,7 +293,17 @@ const verifyToken = (req, res, next) => {
     }
 };
 
+const findbyid = async (id) => {
+    try {
+      const [data] = await (await Database).execute("SELECT * FROM emp WHERE emp.eno = ?", [id]); //Destructure the array.
+      return data; 
+    } catch (err) {
+      console.error(err);
+      throw err; 
+    }
+  };
 
 
 
-module.exports = { insertemp , getallcity, empsalary, changepw , getalldesig,getbankcode, getallemployees , updateemp, deleteemp , checklogin , generatesalary , verifyToken}
+
+module.exports = { insertemp , findbyid , getallcity, empsalary, changepw , getalldesig,getbankcode, getallemployees , updateemp, deleteemp , checklogin , generatesalary , verifyToken}

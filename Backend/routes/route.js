@@ -71,4 +71,20 @@ routes.get("/generatesalary", db.generatesalary);
 
 routes.get("/empsalary", db.empsalary);
 
+routes.get("/findbyid/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const result = await db.findbyid(id); 
+    if (result && result.length > 0) {
+      res.json(result[0]); 
+    } 
+    else {
+      res.status(404).json({ success: false, message: "Employee not found" }); 
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Internal server error", error: err.message });
+  }
+});
+
 module.exports = routes;
