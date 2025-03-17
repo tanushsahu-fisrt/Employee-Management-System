@@ -8,6 +8,10 @@ import ErrorPage from './pages/BadURLS';
 import Admin from './pages/Admin';
 import User from './pages/User';
 import Form from './componenets/Form';
+import  Changepw  from './componenets/Changepw.jsx'
+import Department from './pages/Department.jsx';
+import EmpByDepartment from './pages/EmpByDepartment.jsx';
+import AttendancePage from './pages/Attendance.jsx';
 
 
 
@@ -25,6 +29,10 @@ const App = () => {
           <Route  path='/employees' element={<Allemployee />}/>
           <Route  path='/insert' element={<Form />}/>
           <Route  path='/empsal' element={<Allsalary />}/>
+          <Route  path='/changepw' element={<Changepw />}/>
+          <Route  path='/department' element={<Department />}/>
+          <Route  path='/department/:departmentName' element={<EmpByDepartment />}/>
+          <Route  path='/attendance' element={<AttendancePage />}/>
 
           <Route path='*' element={<ErrorPage />}/>
 

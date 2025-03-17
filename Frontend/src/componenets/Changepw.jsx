@@ -3,7 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Changepw = () => {
+const Changepw = ({onClose}) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirm_Password, setConfirmPassword] = useState("");
@@ -43,17 +43,10 @@ const Changepw = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
+    <div className=" " onClick={onClose}>
+      <div className="fixed inset-0 bg-blue-300/50 z-50" ></div>
 
-      <header className="text-white py-4 bg-gradient-to-r from-gray-300 via-gray-500 to-gray-700 p-[2px] ">
-        <div className="container">
-          <p className="text-bold text-2xl text-center ">
-            Employee Management System
-          </p>
-        </div>
-      </header>
-
-      <div className="fixed inset-0   flex justify-center items-center ">
+      <div className="fixed inset-0 flex justify-center items-center z-50 ">
         <div className="bg-white p-8 rounded-xl shadow-lg w-[90%] sm:w-[50%] md:w-[40%] lg:w-[30%] relative">
           <h2 className="text-center text-3xl font-bold text-gray-800 mb-6">
             Change Password

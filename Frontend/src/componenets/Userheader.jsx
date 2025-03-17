@@ -3,11 +3,14 @@ import imgLogo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css"
+import Changepw from "./Changepw";
 
 const Userheader = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useState("Login");
   const [showMenu, setShowMenu] = useState(false);
+  const [showPW, setShowPW] = useState(false);
+  
 
   const token = sessionStorage.getItem("user");
 
@@ -77,12 +80,12 @@ const Userheader = () => {
           </button>
           {showMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg overflow-hidden z-10">
-              <a
-                href="/changepw"
+              <button
+                onClick={() => setShowPW(true)}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
                 Change Password
-              </a>
+              </button>
               <button
                 onClick={handleLogout}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
@@ -95,6 +98,8 @@ const Userheader = () => {
       </div>
             <ToastContainer autoClose={1000} />
       
+    {showPW && <Changepw  onClose={() => setShowPW(false) }/>}
+
     </header>
   );
 };

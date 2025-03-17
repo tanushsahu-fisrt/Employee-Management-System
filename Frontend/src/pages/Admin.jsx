@@ -18,7 +18,7 @@ const Admin = () => {
       
     <div className="">
       <div className="container mx-auto px-3 mt-5 ">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           {/* Card 1 - Add & Delete */}
           <div className="bg-white rounded-md overflow-hidden shadow-2xl mb-7 ">
             <div className="h-2 bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500"></div>
@@ -67,29 +67,7 @@ const Admin = () => {
             </div>
           </div>
 
-          {/* Card 3 - Show All Employees */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-7 ">
-            <div className="h-2 bg-gradient-to-r from-green-400 via-teal-500 to-blue-500"></div>
-            <div className="p-6">
-              <div className="flex items-center mb-4">
-                <div className="p-2 rounded-full bg-green-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <h3 className="ml-3 text-xl font-bold text-gray-800">Show All Employees</h3>
-              </div>
-              <p className="text-gray-600 mb-6">
-                View a complete list of all employees currently in the system.
-              </p>
-              <button
-                onClick={() => navigate("/employees")}
-                className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition duration-300"
-              >
-                View Employees
-              </button>
-            </div>
-          </div>
+          
 
           {/* Card 4 - Show Salaries */}
           <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-7">
