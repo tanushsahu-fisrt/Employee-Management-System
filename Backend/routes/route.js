@@ -87,4 +87,15 @@ routes.get("/findbyid/:id", async (req, res) => {
   }
 });
 
+routes.get("/department/:departmentName", async (req,res) => {
+  const departmentName = req.params.departmentName;
+  try{
+    const result = await db.findEmpByDepartment(departmentName); 
+    if( result && result.length > 0){
+      res.json(result);
+    }
+  }catch(err){
+    res.status(500).json({ success: false, message: "Internal server error", error: err.message });
+  }
+})
 module.exports = routes;
