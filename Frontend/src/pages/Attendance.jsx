@@ -26,7 +26,7 @@ const AttendancePage = () => {
   return (
     <>
         <Header />
-    <div className="min-h-screen bg-gray-100 p-5">
+    <div className="min-h-screen bg-gray-200 p-5">
       <div className="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6">
         <h1 className="text-2xl font-semibold text-black text-center mb-6">
           Employee Attendance
@@ -37,13 +37,13 @@ const AttendancePage = () => {
           <input
             type="text"
             placeholder="Search Employee"
-            className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-500 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
           />
           <div className="flex justify-center mx-auto space-x-5">
           <select
-            className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-500 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
             onChange={(e) => setDepartment(e.target.value)}
             value={department}
           >
@@ -55,7 +55,7 @@ const AttendancePage = () => {
           </select>
           <input
             type="date"
-            className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-500 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
             onChange={(e) => setDate(e.target.value)}
             value={date}
           />
@@ -63,10 +63,10 @@ const AttendancePage = () => {
         </div>
 
         {/* Attendance Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full bg-white border border-gray-200 rounded-lg shadow-md">
-            <thead className="bg-gray-300">
-              <tr className="text-left text-gray-900">
+        <div className="max-h-[380px] overflow-scroll">
+          <table className="w-full bg-white border border-gray-600 rounded-lg shadow-md ">
+            <thead className="bg-gray-500 ">
+              <tr className="text-left text-white ">
                 <th className="p-3">ID</th>
                 <th className="p-3">Employee Name</th>
                 <th className="p-3">Department</th>
@@ -89,11 +89,11 @@ const AttendancePage = () => {
                       <select
                         className={`border border-gray-300 rounded-md p-2 w-full  ${
                           attendance[emp.eno] === "Present"
-                            ? "bg-green-500"
+                            ? "bg-green-400"
                             : attendance[emp.eno] === "Absent"
-                            ? "bg-red-500"
+                            ? "bg-red-400"
                             : attendance[emp.eno] === "Leave"
-                            ? "bg-yellow-500"
+                            ? "bg-yellow-400"
                             : "bg-gray-200"
                         }`}
                         onChange={(e) => handleAttendanceChange(emp.eno, e.target.value)}

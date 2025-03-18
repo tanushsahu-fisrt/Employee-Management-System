@@ -25,8 +25,11 @@ const Home = () => {
 
   return (
     <>
+
+     
       <div className="container mx-auto px-4 py-12 text-black ">
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 p-[2px] rounded-lg shadow-2xl">
+        <div className="bg-white backdrop-blur-sm rounded-md shadow-2xl overflow-hidden">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 p-8 md:p-12">
               <h1 className="text-4xl md:text-5xl font-bold  mb-4 leading-tight">
@@ -48,6 +51,8 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </div>
+
       </div>
     </>
   );

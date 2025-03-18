@@ -21,7 +21,11 @@ const[employees,setemployees] = useState([]);
 
     <Header />
 
-    <h1 className="text-3xl text-black mb-8 mt-2 text-center">Employee Details</h1>
+    <div className="flex justify-center mt-4 mb-4">
+    <h1 className="text-center  text-black bg-gray-300 py-3 rounded-lg text-2xl shadow-md px-3 border-2 border-black">
+        Employee Details
+    </h1>
+    </div>
         
     <div className="mx-auto max-w-7xl p-2 ">
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

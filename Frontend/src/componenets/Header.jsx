@@ -53,9 +53,9 @@ const Header = () => {
             className="mx-5 cursor-pointer rounded-md border-2 border-blue-800"
           />
           <nav className="ml-6 hidden md:flex space-x-4 text-black text-xl">
+            <a href="/dashboard" className="border-2 border-white p-1 rounded-md">Dashboard</a>
             <a href="/employees" className="border-2 border-white p-1 rounded-md">Employees</a>
             <a href="/department" className="border-2 border-white p-1 rounded-md">Departments</a>
-            <a href="/reports" className="border-2 border-white p-1 rounded-md">Reports</a>
             <a href="/attendance" className="border-2 border-white p-1 rounded-md">Attendance</a>
             <a href="/payroll" className="border-2 border-white p-1 rounded-md">Payroll</a>
             

@@ -12,6 +12,8 @@ import  Changepw  from './componenets/Changepw.jsx'
 import Department from './pages/Department.jsx';
 import EmpByDepartment from './pages/EmpByDepartment.jsx';
 import AttendancePage from './pages/Attendance.jsx';
+import AdminDashboard from './pages/Admindashboard.jsx';
+import Payroll from './pages/Payroll.jsx';
 
 
 
@@ -33,6 +35,8 @@ const App = () => {
           <Route  path='/department' element={<Department />}/>
           <Route  path='/department/:departmentName' element={<EmpByDepartment />}/>
           <Route  path='/attendance' element={<AttendancePage />}/>
+          <Route  path='/dashboard' element={<AdminDashboard />}/>
+          <Route  path='/payroll' element={<Payroll />}/>
 
           <Route path='*' element={<ErrorPage />}/>
 
