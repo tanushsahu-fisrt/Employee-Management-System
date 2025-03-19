@@ -36,7 +36,7 @@ const Login = () => {
 
       if (msg === "success") {
         sessionStorage.setItem("token", jwtoken);
-        sessionStorage.setItem("isfromLogin", true);
+        sessionStorage.setItem("isLogin", true);
         
         if (data.type === "admin") {
           sessionStorage.setItem("admin", JSON.stringify(data));
