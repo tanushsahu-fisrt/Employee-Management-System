@@ -1,9 +1,6 @@
 const Database = require("./db");
 const empmethods=require("./empmethods");
 
-const secret_key = "12345";
-
-
 const getallemployees = async (req,res) => {
 
     try{   
@@ -316,4 +313,28 @@ const ageLimit = async (req,res) => {
     }
 }
 
-module.exports = { insertemp , ageLimit, findEmpByDepartment , findbyid , getallcity, empsalary, changepw , getalldesig,getbankcode, getallemployees , updateemp, deleteemp , checklogin , generatesalary }
+const getProfile = async (req,res) => {
+        const eno = req.query.eno;
+        
+        // Check if eno is provided
+        if (!eno) {
+        return res.status(400).json({ error: 'ENO is required in form-data.' });
+        }
+        try{   
+            const data= await (await Database).execute(`select * from  emp where eno = ?`,[eno])
+            res.send({
+                succes : true,
+                msg: "succes in geting profile",
+                data:data[0],
+            })
+        }
+        catch(error){
+            res.send({
+                succes : false,
+                msg : "error in getting profile",
+                error,
+            })
+        }
+}
+
+module.exports = { insertemp , getProfile, ageLimit, findEmpByDepartment , findbyid , getallcity, empsalary, changepw , getalldesig,getbankcode, getallemployees , updateemp, deleteemp , checklogin , generatesalary }

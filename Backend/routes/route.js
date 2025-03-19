@@ -4,8 +4,9 @@ const routes = express.Router();
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../middleware/verifyToken");
+const multer = require("multer");
 
-// const secret_key = "12345";
+const upload = multer();
 
 routes.use(
   session({
@@ -101,5 +102,7 @@ routes.get("/department/:departmentName", verifyToken , async (req,res) => {
 })
 
 routes.get("/ageLimit",verifyToken, db.ageLimit)
+
+routes.get("/profile",verifyToken,db.getProfile)
 
 module.exports = routes;
