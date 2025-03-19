@@ -276,22 +276,6 @@ const empsalary = async (req,res)=>{
     }
 };
 
-const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1]; // Bearer token
-
-    if (!token) {
-        return res.status(403).json({ msg: "Token required" });
-    }
-
-    try {
-        const decoded = jwt.verify(token, secret_key);
-        console.log("Decoded Token:", decoded);
-        req.user = decoded; 
-        next();
-    } catch (err) {
-        return res.status(401).json({ msg: "Invalid or expired token" });
-    }
-};
 
 const findbyid = async (id) => {
     try {
@@ -313,4 +297,23 @@ const findEmpByDepartment = async (departmentName) => {
     }
 }
 
-module.exports = { insertemp , findEmpByDepartment , findbyid , getallcity, empsalary, changepw , getalldesig,getbankcode, getallemployees , updateemp, deleteemp , checklogin , generatesalary , verifyToken}
+const ageLimit = async (req,res) => {
+    try{   
+        const data= await (await Database).execute(`select ROUND (AVG( year(curdate()) - CAST(SUBSTRING(dob, 1, 4)
+                                        as unsigned))) AS averageAge from emp`)
+        res.send({
+            succes : true,
+            msg: "succes in geting age",
+            data:data[0],
+        })
+    }
+    catch(error){
+        res.send({
+            succes : false,
+            msg : "error in getting all employes",
+            error,
+        })
+    }
+}
+
+module.exports = { insertemp , ageLimit, findEmpByDepartment , findbyid , getallcity, empsalary, changepw , getalldesig,getbankcode, getallemployees , updateemp, deleteemp , checklogin , generatesalary }

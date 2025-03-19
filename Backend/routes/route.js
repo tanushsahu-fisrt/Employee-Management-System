@@ -3,8 +3,9 @@ const db = require("../controllers/mydb");
 const routes = express.Router();
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../middleware/verifyToken");
 
-const secret_key = "12345";
+// const secret_key = "12345";
 
 routes.use(
   session({
@@ -20,7 +21,7 @@ routes.get("/getallcity", db.getallcity);
 
 routes.get("/getallbank", db.getbankcode);
 
-routes.get("/employees", db.getallemployees);
+routes.get("/employees", verifyToken, db.getallemployees);
 
 routes.post("/insertanemp", db.insertemp);
 
@@ -45,7 +46,7 @@ routes.post("/checklogin", async (req, res) => {
     const user = result[0];
     const token = jwt.sign(
       { id: user.eno, email: user.email, type: user.type }, 
-      secret_key, 
+      process.env.secret_key, 
       { expiresIn: '1h' }
     );
 
@@ -87,7 +88,7 @@ routes.get("/findbyid/:id", async (req, res) => {
   }
 });
 
-routes.get("/department/:departmentName", async (req,res) => {
+routes.get("/department/:departmentName", verifyToken , async (req,res) => {
   const departmentName = req.params.departmentName;
   try{
     const result = await db.findEmpByDepartment(departmentName); 
@@ -98,4 +99,7 @@ routes.get("/department/:departmentName", async (req,res) => {
     res.status(500).json({ success: false, message: "Internal server error", error: err.message });
   }
 })
+
+routes.get("/ageLimit",verifyToken, db.ageLimit)
+
 module.exports = routes;
