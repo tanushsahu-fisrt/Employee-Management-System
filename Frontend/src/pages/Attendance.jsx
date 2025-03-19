@@ -8,9 +8,15 @@ const AttendancePage = () => {
   const [department, setDepartment] = useState("All");
   const [attendance, setAttendance] = useState({});
   const[employees,setemployees] = useState([]);
-  
+
+  const token = sessionStorage.getItem("token");
       useEffect( () => {
-          fetch("http://localhost:3000/employees")
+          fetch("http://localhost:3000/employees",{
+            method : "Get",
+            headers : {
+              Authorization : `Bearer ${token}`
+            }
+          })
           .then( (res) => res.json() )
           .then( (data) => {
               setemployees(data.data);

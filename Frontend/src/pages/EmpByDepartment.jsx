@@ -7,10 +7,17 @@ const EmpByDepartment = () => {
   const { departmentName } = useParams();
   const [employees, setemployees] = useState([]);
 
+  const token = sessionStorage.getItem("token");
+
   useEffect(() => {
     const fetchEmployees = async () => {
         try {
-            const emp = await axios.get(`http://localhost:3000/department/${departmentName}`);
+            const emp = await axios.get(`http://localhost:3000/department/${departmentName}`,{
+              method : "Get",
+              headers : {
+                Authorization : `Bearer ${token}`
+              }
+            });
             setemployees(emp.data);
         } catch (error) {
             console.error('Error fetching employees:', error);

@@ -3,13 +3,22 @@ import Header from "./Header";
 
 const Allemployee = () => {
 
-const[employees,setemployees] = useState([]);
-
+    const[employees,setemployees] = useState([]);
+    const token = sessionStorage.getItem("token");
+    
     useEffect( () => {
-        fetch("http://localhost:3000/employees")
+        fetch("http://localhost:3000/employees",
+            {
+                method : "GET",
+                headers: { 
+                    Authorization : `Bearer ${token}`
+                }
+            }
+        )
         .then( (res) => res.json() )
         .then( (data) => {
             setemployees(data.data);
+            console.log(data.data);
         })
         .catch( (err) => console.log('error' + err))
     },[])
@@ -21,13 +30,12 @@ const[employees,setemployees] = useState([]);
 
     <Header />
 
-    <div className="flex justify-center mt-4 mb-4">
+    <div className="flex justify-center mt-4  mb-4 ">
     <h1 className="text-center  text-black bg-gray-300 py-3 rounded-lg text-2xl shadow-md px-3 border-2 border-black">
         Employee Details
     </h1>
     </div>
-        
-    <div className="mx-auto max-w-7xl p-2 ">
+    <div className="mx-auto max-w-7xl p-2 max-h-[600px] overflow-scroll">
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {employees.length > 0 ? (
             employees.map((element, index) => (
