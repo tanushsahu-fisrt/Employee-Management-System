@@ -318,7 +318,7 @@ const getProfile = async (req,res) => {
         
         // Check if eno is provided
         if (!eno) {
-        return res.status(400).json({ error: 'ENO is required in form-data.' });
+        return res.status(400).json({ error: 'ENO is required' });
         }
         try{   
             const data= await (await Database).execute(`select * from  emp where eno = ?`,[eno])
@@ -337,4 +337,34 @@ const getProfile = async (req,res) => {
         }
 }
 
-module.exports = { insertemp , getProfile, ageLimit, findEmpByDepartment , findbyid , getallcity, empsalary, changepw , getalldesig,getbankcode, getallemployees , updateemp, deleteemp , checklogin , generatesalary }
+
+const avgSalaryByDpt = async (req,res) => {
+        const department = req.query.department;
+
+        // Check if department is provided
+        if (!department) {
+             return res.status(400).json({ error: 'department is required .' });
+        }
+        try{   
+            const data= await (await Database).execute(`select ROUND(AVG(salary)) as AvgSalary from emp where Department = ?`,[department])
+            res.send({
+                succes : true,
+                msg: "succes in avg salary by department",
+                data : data[0],
+            })
+        }
+        catch(error){
+            res.send({
+                succes : false,
+                msg : "error in getting profile",
+                error,
+            })
+        }
+}
+
+module.exports = { insertemp , avgSalaryByDpt, getProfile,
+                    ageLimit, findEmpByDepartment , findbyid , 
+                    getallcity, empsalary, changepw , getalldesig,
+                    getbankcode, getallemployees , updateemp, 
+                    deleteemp , checklogin , generatesalary 
+                }

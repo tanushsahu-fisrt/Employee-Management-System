@@ -105,4 +105,6 @@ routes.get("/ageLimit",verifyToken, db.ageLimit)
 
 routes.get("/profile",verifyToken,db.getProfile)
 
+routes.get("/avgSalaryByDpt",verifyToken, db.avgSalaryByDpt)
+
 module.exports = routes;
