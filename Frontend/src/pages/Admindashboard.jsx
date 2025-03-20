@@ -117,7 +117,7 @@ const AdminDashboard = () => {
             
             <div className="bg-blue-100 p-2 rounded-md  text-lg shadow-md text-left flex space-x-2 mt-4 justify-around ">
               <h3 className="font-medium text-gray-700 mb-2">
-                Department-wise Distribution : 
+                Department-wise Distribution(employee) : 
               </h3>
               <p className="text-black border-2 border-white bg-green-300 px-5 rounded-md">IT : {department.IT}</p>
               <p className="text-black border-2 border-white bg-green-300 px-5 rounded-md">Marketing : {department.Marketing}</p>

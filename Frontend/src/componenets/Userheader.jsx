@@ -65,9 +65,6 @@ const Userheader = () => {
             >
               Salary Statement
             </a>
-            <a href="/payroll" className="border-2 border-white p-1 rounded-md">
-              Payroll
-            </a>
           </nav>
         </div>
 
