@@ -101,10 +101,15 @@ routes.get("/department/:departmentName", verifyToken , async (req,res) => {
   }
 })
 
-routes.get("/ageLimit",verifyToken, db.ageLimit)
+routes.get("/ageLimit",verifyToken, db.ageLimit);
 
-routes.get("/profile",verifyToken,db.getProfile)
+routes.get("/profile",verifyToken,db.getProfile);
 
-routes.get("/avgSalaryByDpt",verifyToken, db.avgSalaryByDpt)
+routes.get("/avgSalaryByDpt",verifyToken, db.avgSalaryByDpt);
+
+routes.get("/employee/:userId/performance", verifyToken,db.empPerfromance );
+
+routes.get("/employees/performance", verifyToken,db.AllEmpPerfromance );
+
 
 module.exports = routes;

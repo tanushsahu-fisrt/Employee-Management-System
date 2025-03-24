@@ -72,7 +72,7 @@ const getallcity =async (req, res) => {
 const getalldesig = async (req,res) =>{
 
     try{   
-        const data= await (await Database).execute("select * from designation") 
+        const data= await (await Database).execute("select distinct(designation) from emp") 
 
         res.send({
             succes : "true",
@@ -90,11 +90,8 @@ const getalldesig = async (req,res) =>{
 };
 
 const getbankcode = async (req,res)=>{
-
     try{   
-        const data= await (await Database).execute("select * from bank")
-       
-
+        const data= await (await Database).execute("select distinct(BankCode) from emp")
         res.send({
             succes : "true",
             msg: "succes in geting all emp",
@@ -362,9 +359,54 @@ const avgSalaryByDpt = async (req,res) => {
         }
 }
 
+const empPerfromance = async (req, res) => {
+    const userId = req.params.userId;
+    try{
+        const result = await (await Database).execute(`SELECT e.ename, e.department, ep.review_date, 
+                        ep.rating, ep.feedback, ep.projects_completed, 
+                        ep.attendance_percentage, ep.training_completed 
+                        FROM emp e
+                        JOIN emp_performance ep ON e.eno = ep.emp_id
+                        WHERE e.eno = ?;`
+                        ,[userId]);
+        
+        res.send({
+            succes : true,
+            msg: "succes in employees performance",
+            data : result[0],
+        })
+    }
+    catch(err){
+        res.send({
+            succes : false,
+            msg : "error in getting profile",
+            err,
+        })
+    }
+}
+
+const AllEmpPerfromance = async (req, res) => {
+    try{
+        const result = await (await Database).execute(`SELECT * from emp_performance`);
+        res.send({
+            succes : true,
+            msg: "succes in employees performance",
+            data : result[0],
+        })
+    }
+    catch(err){
+        res.send({
+            succes : false,
+            msg : "error in getting profile",
+            err,
+        })
+    }
+}
+
 module.exports = { insertemp , avgSalaryByDpt, getProfile,
                     ageLimit, findEmpByDepartment , findbyid , 
                     getallcity, empsalary, changepw , getalldesig,
                     getbankcode, getallemployees , updateemp, 
-                    deleteemp , checklogin , generatesalary 
+                    deleteemp , checklogin , generatesalary ,
+                    empPerfromance , AllEmpPerfromance
                 }
