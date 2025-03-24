@@ -6,10 +6,12 @@ import "react-toastify/ReactToastify.css"
 import Changepw from "./Changepw";
 
 const Userheader = () => {
+
   const navigate = useNavigate();
   const [login, setLogin] = useState("Login");
   const [showMenu, setShowMenu] = useState(false);
   const [showPW, setShowPW] = useState(false);
+  const [userId, setUserId] = useState(null);
   
 
   const token = sessionStorage.getItem("user");
@@ -18,6 +20,7 @@ const Userheader = () => {
     if (token) {
       const user = JSON.parse(token);
       setLogin(user.email);
+      setUserId(user.eno);
     }
   }, []);
 
@@ -65,6 +68,12 @@ const Userheader = () => {
             >
               Salary Statement
             </a>
+            <p
+              onClick={() => navigate("/performance", { state : userId } )}
+              className="border-2 border-white p-1 rounded-md"
+            >
+              Performance
+            </p>
           </nav>
         </div>
 

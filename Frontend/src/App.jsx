@@ -15,6 +15,7 @@ import AttendancePage from './pages/Attendance.jsx';
 import AdminDashboard from './pages/Admindashboard.jsx';
 import Payroll from './pages/Payroll.jsx';
 import UserProfile from './pages/UserProfile.jsx';
+import UserPerformance from './pages/UserPerformance.jsx';
 
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
           <Route  path='/dashboard' element={<AdminDashboard />}/>
           <Route  path='/payroll' element={<Payroll />}/>
           <Route  path='/profile' element={<UserProfile />}/>
+          <Route  path='/performance' element={<UserPerformance />}/>
 
 
           <Route path='*' element={<ErrorPage />}/>

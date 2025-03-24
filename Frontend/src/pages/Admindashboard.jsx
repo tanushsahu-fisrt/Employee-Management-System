@@ -11,6 +11,10 @@ const AdminDashboard = () => {
 
   const token = sessionStorage.getItem("token");
 
+  const [performance,setPerformance] = useState([]);
+  const [avgAttendance,setAvgAttendance] = useState([]);
+  const [avgPerformance,setAvgPerformance] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
 
@@ -36,6 +40,27 @@ const AdminDashboard = () => {
 
     }, []);
 
+    useEffect(() => {
+    const getData = async () => {
+        fetch("http://localhost:3000/employees/performance", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPerformance(data.data)
+          calculatePerformace(data.data);
+          calculateAttendance(data.data);
+        })
+         .catch((err) => console.log("error" + err));
+      }
+
+      getData();
+
+    }, []);
+
 
     const gender = (employees) => {
         const MaleLength = employees.filter( ele => ele.gender == 'Male').length ;
@@ -45,12 +70,24 @@ const AdminDashboard = () => {
     
     const departmentWise = (employees) => {
         const IT = employees.filter( ele => ele.Department == 'IT').length ;
-        console.log(IT)
         const HR = employees.filter( ele => ele.Department == 'HR').length ;
         const Finance = employees.filter( ele => ele.Department == 'Finance').length ;
         const Marketing = employees.filter( ele => ele.Department == 'Marketing').length;
         const Sales = employees.filter( ele => ele.Department == 'Sales').length ;
         setDepartment({ ...department, IT : IT  , HR : HR , Finance : Finance , Sales : Sales , Marketing : Marketing});
+    }
+    
+    const calculateAttendance = (attendance) => {
+        const Size = attendance.length ;
+        const attendanceSum = attendance.reduce( (total,item) => total = total + item.attendance_percentage , 0)
+        const result = attendanceSum / Size;
+        setAvgAttendance(result)
+    }
+    const calculatePerformace = (performance) => {
+        const size = performance.length ;
+        const perfromanceSum = performance.reduce( (total,item) => total = total + item.rating , 0)
+        const result = Math.round(perfromanceSum * 10 / size) / 10;
+        setAvgPerformance(result)
     }
 
 
@@ -136,21 +173,34 @@ const AdminDashboard = () => {
             Performance & Attendance
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {["Leave Reports", "Performance Metrics", "Attendance Trends"].map(
-              (title, index) => (
                 <div
-                  key={index}
                   className="bg-green-100 p-4 rounded-md shadow-md text-center"
                 >
                   <h3 className="text-lg font-medium text-gray-700 mb-2">
-                    {title}
+                  Leave Reports
                   </h3>
                   <p className="text-gray-600 text-sm">
                     Insights coming soon...
                   </p>
+                </div><div
+                  className="bg-green-100 p-4 rounded-md shadow-md text-center"
+                >
+                  <h3 className="text-lg font-medium text-gray-700 mb-2">
+                    Attendance Trends
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    Average : { avgAttendance} %
+                  </p>
+                </div><div
+                  className="bg-green-100 p-4 rounded-md shadow-md text-center"
+                >
+                  <h3 className="text-lg font-medium text-gray-700 mb-2">
+                  Overall Performance Rating
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    Out of 5 : {avgPerformance}
+                  </p>
                 </div>
-              )
-            )}
           </div>
         </div>
 

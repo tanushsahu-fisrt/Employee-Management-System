@@ -31,7 +31,7 @@ const EmpByDepartment = () => {
     <>
         <Header />
       <div className="flex justify-center mt-4 mb-4">
-          <h1 className="text-center  text-black bg-gray-300 py-3 rounded-lg text-2xl shadow-md px-3 border-2 border-black">
+          <h1 className="text-center  text-black font-bold py-3 rounded-lg text-2xl  px-3 ">
             {departmentName} Department
           </h1>
       </div>

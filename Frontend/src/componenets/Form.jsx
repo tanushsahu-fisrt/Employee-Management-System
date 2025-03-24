@@ -138,8 +138,8 @@ const Form = () => {
     try {
       const result = await axios.get(`http://localhost:3000/findbyid/${id}`); 
       console.log(result.data)
+      toast.success("employee data found");
       if(result.data){
-      toast.success("employee data found"); 
       setusername(result.data.ename); 
       setusergender(result.data.gender); 
       setuserdob(result.data.dob); 
@@ -169,7 +169,6 @@ const Form = () => {
     <div>
       <Header />
 
-      <div className="p-10 b-solid-2">
         {heading && (
           <h1 className="text-center p-2 text-xl mt-2 mb-2 font-bold">
             Insert And Delete Employee
@@ -363,9 +362,6 @@ const Form = () => {
                   <br />
                   <br />
                   <input
-                    type="number"
-                    id="TFAccountNo"
-                    name="TFAccountNo"
                     placeholder="Employee PFaccountNo"
                     className="rounded-lg"
                     onChange={(e) => setuserepfno(e.target.value)}
@@ -469,7 +465,6 @@ const Form = () => {
               </div>
             )}
           </form>
-        </div>
       </div>
       <ToastContainer autoClose={1000} />
     </div>
