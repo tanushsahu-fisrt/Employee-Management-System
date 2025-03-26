@@ -111,5 +111,9 @@ routes.get("/employee/:userId/performance", verifyToken,db.empPerfromance );
 
 routes.get("/employees/performance", verifyToken,db.AllEmpPerfromance );
 
+routes.post("/attendance", verifyToken,db.setAttendance );
+
+routes.get("/attendanceByDate/:date", db.getAttendance );
+
 
 module.exports = routes;

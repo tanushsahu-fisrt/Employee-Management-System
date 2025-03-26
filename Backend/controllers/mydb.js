@@ -403,10 +403,62 @@ const AllEmpPerfromance = async (req, res) => {
     }
 }
 
+const setAttendance = async (req,res) => {
+    
+    try{
+    const apiData = req.body;
+
+    for(const row of apiData){
+        const { emp_id,attendance_status,Date} = row;
+        (await Database).execute(`INSERT INTO emp_attendance (emp_id,attendance_status,Date) VALUES(?,?,?)`,[emp_id,attendance_status,Date])
+    }
+        res.send({
+            succes : true,
+            msg: "succes in attendance",
+        })
+    }
+    catch(err){
+        res.send({
+            succes : false,
+            msg : "error in getting attendance",
+        })
+    }
+}
+
+const getAttendance = async (req,res) => {
+    const {date} = req.params;
+
+    try{
+        const [result] = await (await Database).execute(`Select * from emp_attendance where Date = ?`,[date])
+        
+            if (result.length > 0) {
+            res.status(200).json({
+              success: true,
+              msg: 'Attendance retrieved successfully',
+              data: result,
+            });
+          } else {
+            res.status(404).json({
+              success: false,
+              msg: 'Attendance not found for the given date',
+            });
+          }
+    }
+    catch(err){
+        console.error('Database error:', err);
+        res.status(500).json({
+            success: false,
+            msg: 'Internal server error',
+            error: err.message, 
+        });
+    }
+}
+
 module.exports = { insertemp , avgSalaryByDpt, getProfile,
                     ageLimit, findEmpByDepartment , findbyid , 
                     getallcity, empsalary, changepw , getalldesig,
                     getbankcode, getallemployees , updateemp, 
                     deleteemp , checklogin , generatesalary ,
-                    empPerfromance , AllEmpPerfromance
+                    empPerfromance , AllEmpPerfromance,setAttendance,
+                    getAttendance
                 }

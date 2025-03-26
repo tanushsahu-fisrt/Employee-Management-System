@@ -1,5 +1,8 @@
 import React, { useState , useEffect } from "react";
 import Header from "../componenets/Header";
+import axios from "axios";
+import { ToastContainer , toast} from "react-toastify";
+import "react-toastify/ReactToastify.css"
 
 const AttendancePage = () => {
 
@@ -10,7 +13,8 @@ const AttendancePage = () => {
   const[employees,setemployees] = useState([]);
 
   const token = sessionStorage.getItem("token");
-      useEffect( () => {
+      
+  useEffect( () => {
           fetch("http://localhost:3000/employees",{
             method : "Get",
             headers : {
@@ -28,7 +32,48 @@ const AttendancePage = () => {
     setAttendance({ ...attendance, [id]: status });
   };
 
-  console.log(attendance)
+  const func = (date,obj) => Object.entries(obj).map(([k,v]) =>({ 'emp_id': k, 'attendance_status' : v , 'Date' : date}) )
+
+  const handleSubmit = async () => {
+    const data = func(date,attendance)
+
+    const result = await axios.post("http://localhost:3000/attendance" , data ,{
+      headers : {
+        Authorization :  `Bearer ${token}`
+      }, 
+    })
+    console.log(result);
+      if(result.data.succes){
+        toast.success('Attendance Filed!')
+        setDate("")
+        setAttendance({});
+      }
+    }
+
+    useEffect(() => {
+      if (date) { // Check that date has a value.
+        const fetchData = async () => {
+          try {
+            const result = await axios.get(`http://localhost:3000/attendanceByDate/${date}`);
+            const attendanceData = result.data.data;
+            
+            if (attendanceData.length > 0){
+              const attendanceMap = attendanceData.reduce((acc, entry) => {
+                acc[entry.emp_id] = entry.attendance_status;
+                return acc;
+              }, {});
+              setAttendance(attendanceMap);
+            } else {
+              setAttendance({});
+            }
+          } catch (error) {
+            console.error('Error fetching attendance data:', error);
+          }
+        };
+        fetchData();
+      }
+    }, [date]);
+    
   return (
     <>
         <Header />
@@ -73,7 +118,8 @@ const AttendancePage = () => {
           <table className="w-full bg-white border border-gray-600 rounded-lg shadow-md ">
             <thead className="bg-gray-500 ">
               <tr className="text-left text-white ">
-                <th className="p-3">ID</th>
+                <th className="p-3">EmployeeNo</th>
+                <th className="p-3">EmployeeID</th>
                 <th className="p-3">Employee Name</th>
                 <th className="p-3">Department</th>
                 <th className="p-3">Attendance Status</th>
@@ -89,19 +135,12 @@ const AttendancePage = () => {
                 .map((emp) => (
                   <tr key={emp.eno} className="border-t text-gray-700">
                     <td className="p-3">{emp.eno}</td>
-                    <td className="p-3">{emp.ename}</td>
+                    <td className="p-3">{emp.eno}</td>
+                    <td className="p-3" >{emp.ename}</td>
                     <td className="p-3">{emp.Department}</td>
                     <td className="p-3">
                       <select
-                        className={`border border-gray-300 rounded-md p-2 w-full  ${
-                          attendance[emp.eno] === "Present"
-                            ? "bg-green-400"
-                            : attendance[emp.eno] === "Absent"
-                            ? "bg-red-400"
-                            : attendance[emp.eno] === "Leave"
-                            ? "bg-yellow-400"
-                            : "bg-gray-200"
-                        }`}
+                        className="border border-gray-300 rounded-md p-2 w-full bg-gray-200"
                         onChange={(e) => handleAttendanceChange(emp.eno, e.target.value)}
                         value={attendance[emp.eno] || ""}
                       >
@@ -119,12 +158,19 @@ const AttendancePage = () => {
 
         {/* Action Buttons */}
         <div className="flex justify-center gap-4 mt-6">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Submit Attendance</button>
+          <button 
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:bg-blue-300 "
+          onClick={handleSubmit}
+          disabled={!date}
+          >
+            Submit Attendance
+          </button>
           <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700">Export Report</button>
         </div>
       </div>
     </div>
-
+    
+    <ToastContainer autoClose={1000} position="top-right"/>
     </>
   );
 };
