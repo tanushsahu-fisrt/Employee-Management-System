@@ -4,15 +4,17 @@ import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import Home from "./Home"
+import { useNavigate } from "react-router-dom"
 
 const User = () => {
   const token = sessionStorage.getItem("user")
-  let employeeNo = 0
+  const navigate = useNavigate();
+  const[employeeNo,setEmployeeNo] = useState(0);
 
   useEffect(() => {
     if (token) {
       const user = JSON.parse(token)
-      employeeNo = user.eno 
+      setEmployeeNo(user.eno); 
     }
   }, [])
 
@@ -34,8 +36,8 @@ const User = () => {
       <Home />
       
 
-      <div className="">
-      <div className="container mx-auto px-3 mt-5 ">
+      <div className="mx-2">
+      <div className="container mx-auto px-3 mt-1">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           {/* Card 1 - Add & Delete */}
           <div className="bg-white rounded-md overflow-hidden shadow-2xl mb-7 ">
@@ -64,7 +66,7 @@ const User = () => {
                show my Profile
               </p>
               <button
-                onClick={() => navigate("/insert", { state: { add: 'add', show: showHead.showAdd }})}
+                onClick={() => navigate("/profile")}
                 className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition duration-300"
               >
                 Profile
@@ -72,7 +74,7 @@ const User = () => {
             </div>
           </div>
 
-          {/* Card 2 - Update & Delete */}
+          {/* Card 2 - Attendance */}
           <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-7 ">
             <div className="h-2 bg-gradient-to-r from-red-400 via-pink-500 to-purple-500"></div>
             <div className="p-6">
@@ -99,7 +101,7 @@ const User = () => {
                 View Attendance
               </p>
               <button
-                onClick={() => navigate("/insert", { state: showHead.showUpdate })}
+                onClick={() => navigate(`/attend/${employeeNo}`)}
                 className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition duration-300"
               >
                 Attendance
@@ -107,7 +109,7 @@ const User = () => {
             </div>
           </div>
 
-          {/* Card 3 - Show All Employees */}
+          {/* Card 3 - Show Salary */}
           <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-7 ">
             <div className="h-2 bg-gradient-to-r from-green-400 via-teal-500 to-blue-500"></div>
             <div className="p-6">
@@ -134,7 +136,7 @@ const User = () => {
                 view this month salary
               </p>
               <button
-                onClick={() => navigate("/employees")}
+                onClick={() => navigate("/salary")}
                 className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition duration-300"
               >
                 Salary

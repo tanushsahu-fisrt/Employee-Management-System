@@ -62,15 +62,9 @@ const Userheader = () => {
             >
               salary Slip
             </a>
-            <a
-              href="/salarystatement"
-              className="border-2 border-white p-1 rounded-md"
-            >
-              Salary Statement
-            </a>
             <p
               onClick={() => navigate("/performance", { state : userId } )}
-              className="border-2 border-white p-1 rounded-md"
+              className="border-2 border-white p-1 rounded-md cursor-pointer"
             >
               Performance
             </p>

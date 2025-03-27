@@ -65,15 +65,7 @@ const UserPerformance = () => {
     <>
       <Userheader />
       <div className=" mx-auto p-6">
-        {employeeInfo && (
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8 mx-4">
-            <h2 className="text-3xl font-bold mb-2">{employeeInfo.ename}</h2>
-            <p className="text-lg text-gray-200">
-              Department: {employeeInfo.department}
-            </p>
-          </div>
-        )}
-
+       
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mx-4">
           {performanceData.map((item, index) => (
             <div
