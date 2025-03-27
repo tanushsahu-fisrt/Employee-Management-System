@@ -115,5 +115,7 @@ routes.post("/attendance", verifyToken,db.setAttendance );
 
 routes.get("/attendanceByDate/:date", db.getAttendance );
 
+routes.get("/attend/:eno",verifyToken, db.getUserAtd );
+
 
 module.exports = routes;

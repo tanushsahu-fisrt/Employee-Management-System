@@ -454,11 +454,40 @@ const getAttendance = async (req,res) => {
     }
 }
 
+const getUserAtd = async (req,res) => {
+    const {eno} = req.params;
+    
+    try{
+        const [result] = await (await Database).execute(`select * from emp_attendance where emp_id = ?`,[eno])
+        
+            if (result.length > 0) {
+            res.status(200).json({
+              success: true,
+              msg: 'Attendance retrieved successfully',
+              data: result,
+            });
+          } else {
+            res.status(404).json({
+              success: false,
+              msg: 'Attendance not found for the given date',
+            });
+          }
+    }
+    catch(err){
+        console.error('Database error:', err);
+        res.status(500).json({
+            success: false,
+            msg: 'Internal server error',
+            error: err.message, 
+        });
+    }
+}
+
 module.exports = { insertemp , avgSalaryByDpt, getProfile,
                     ageLimit, findEmpByDepartment , findbyid , 
                     getallcity, empsalary, changepw , getalldesig,
                     getbankcode, getallemployees , updateemp, 
                     deleteemp , checklogin , generatesalary ,
                     empPerfromance , AllEmpPerfromance,setAttendance,
-                    getAttendance
+                    getAttendance , getUserAtd
                 }
