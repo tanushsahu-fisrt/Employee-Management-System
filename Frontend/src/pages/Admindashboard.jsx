@@ -116,7 +116,7 @@ const AdminDashboard = () => {
 
         {/* Employee Demographics */}
         <div className="h-2 bg-gradient-to-r from-blue-200 via-blue-500 to-purple-500 rounded-lg"></div>
-        <div className="p-6 bg-white  mb-6 border-2 shadow-lg">
+        <div className="p-6 bg-white  mb-6 border-2 shadow-lg text-lg">
           <h2 className="text-2xl font-semibold text-gray-700 mb-4">
             Employee Demographics & Distribution
           </h2>

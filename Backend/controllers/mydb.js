@@ -466,10 +466,12 @@ const getUserAtd = async (req,res) => {
               msg: 'Attendance retrieved successfully',
               data: result,
             });
-          } else {
-            res.status(404).json({
+          } 
+          else {
+            res.status(200).json({
               success: false,
               msg: 'Attendance not found for the given date',
+              data : [],
             });
           }
     }

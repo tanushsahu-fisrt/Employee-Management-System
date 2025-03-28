@@ -179,42 +179,7 @@ const Department = () => {
                   className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition duration-300"
                 >
                   VIEW EMPLOYEES
-                </button>
-              </div>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-7 ">
-              <div className="h-2 bg-gradient-to-r from-red-400 via-pink-500 to-purple-500"></div>
-              <div className="p-6">
-                <div className="flex items-center mb-4">
-                  <div className="p-2 rounded-full bg-purple-400">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="ml-3 text-xl font-bold text-gray-800">
-                    Attendance
-                  </h3>
-                </div>
-
-                <button
-                  onClick={() =>
-                    navigate("/department/Attendance")
-                  }
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white py-3 rounded-lg font-medium shadow-md hover:shadow-lg transition duration-300"
-                >
-                  VIEW EMPLOYEES
-                </button>
+                </button>  
               </div>
             </div>
           </div>
