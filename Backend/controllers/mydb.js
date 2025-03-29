@@ -441,6 +441,7 @@ const getAttendance = async (req,res) => {
             res.status(404).json({
               success: false,
               msg: 'Attendance not found for the given date',
+              data : [],
             });
           }
     }
@@ -468,10 +469,9 @@ const getUserAtd = async (req,res) => {
             });
           } 
           else {
-            res.status(200).json({
+            res.status(404).json({
               success: false,
               msg: 'Attendance not found for the given date',
-              data : [],
             });
           }
     }

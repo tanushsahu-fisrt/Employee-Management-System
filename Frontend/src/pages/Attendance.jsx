@@ -42,7 +42,7 @@ const AttendancePage = () => {
         Authorization :  `Bearer ${token}`
       }, 
     })
-    console.log(result);
+    
       if(result.data.succes){
         toast.success('Attendance Filed!')
         setDate("")
@@ -56,14 +56,15 @@ const AttendancePage = () => {
           try {
             const result = await axios.get(`http://localhost:3000/attendanceByDate/${date}`);
             const attendanceData = result.data.data;
-            
+
             if (attendanceData.length > 0){
               const attendanceMap = attendanceData.reduce((acc, entry) => {
                 acc[entry.emp_id] = entry.attendance_status;
                 return acc;
               }, {});
               setAttendance(attendanceMap);
-            } else {
+            } 
+            else {
               setAttendance({});
             }
           } catch (error) {
